@@ -36,18 +36,64 @@ function FullCalendarApp() {
                 customButtons={{
                     new: {
                     text: 'new',
-                    click: () => console.log('new event'),
+                    click: () => {
+                        var dateStr = prompt('Enter a date in YYY-MM-DD FORMAT');
+                        var date = new Date(dateStr+'T000:000:00');
+                        if (!isNaN(date.valueOf())) { // valid?
+                            Calendar:addEvent({
+                              title: 'dynamic event',
+                              start: date,
+                              allDay: true
+                            });
+                            alert('Great. Now, update your database...');
+                        } else {
+                          alert('Invalid date.');
+                        }
+                    }
                     },
                 }}
                 events={events}
-                eventColor="red"
+                eventColor="blue"
                 nowIndicator
                 dateClick={(e) => console.log(e.dateStr)}
                 eventClick={(e) => console.log(e.event.id)}
             />
         </div>
     );
-  }
+}
   
-  export default FullCalendarApp;
+export default FullCalendarApp;
+
+// document.addEventListener('DOMContentLoaded', function() {
+//     var calendarEl = document.getElementById('calendar');
   
+//     var calendar = new FullCalendar.Calendar(calendarEl, {
+//       initialView: 'dayGridMonth',
+//       headerToolbar: {
+//         center: 'addEventButton'
+//       },
+//       customButtons: {
+//         addEventButton: {
+//           text: 'add event...',
+//           click: function() {
+//             var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+//             var date = new Date(dateStr + 'T00:00:00'); // will be in local time
+  
+//             if (!isNaN(date.valueOf())) { // valid?
+//               calendar.addEvent({
+//                 title: 'dynamic event',
+//                 start: date,
+//                 allDay: true
+//               });
+//               alert('Great. Now, update your database...');
+//             } else {
+//               alert('Invalid date.');
+//             }
+//           }
+//         }
+//       }
+//     });
+  
+//     calendar.render();
+//     return calendar;
+// });

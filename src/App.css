@@ -39,11 +39,16 @@
 body {
   --ucla-blue: #2774AE;
   --muh-color: #50b7f5;
-  --app-background: whitesmoke;
+  /* --app-background: #D9CCBF; */
+  --app-background: #E9EDE9;
   /* --muh-sidebarOptions: #e0f1fd;  */
   /* --muh-sidebar: #e8f5fe; */
   /* -muh-border: #d3d2d2 */
-  --calendar-background: #edf4f7;
+  /* --calendar-background: #edf4f7; */
+  /* --calendar-background: #67597A; */
+  /* --calendar-today: #B6ACC3;
+  --calendar-background: #CBC4D4; */
+  --calendar-background: #E0D6CC;
   --task-background: #F1DEDC;
 }
 
@@ -61,6 +66,7 @@ body {
   padding-bottom: 20px; */
   min-width: 20vw;
   min-height: 100vh;
+  /* max-height: 100vh; */
 }
 
 .calendar {
@@ -70,4 +76,8 @@ body {
   border-radius: 20px;
   margin-left: 20px;
   margin-right: 20px;
+  /* min-height: 100vh; */
+  padding-left: 30px;
+  padding-right: 30px;
+  /* max-height: 100vh; */
 }
