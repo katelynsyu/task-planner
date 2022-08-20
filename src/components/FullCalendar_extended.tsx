@@ -4,14 +4,23 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import HandleDateClick from './AddEvent.js';
-import { query, onSnapshot, collection  } from 'firebase/firestore';
-import { fb } from "./../firebase/config";
+import { query, onSnapshot, collection, orderBy, startAt, endAt } from 'firebase/firestore';
+import { fb } from "../firebase/config";
 
+interface VisibleDates {
+    start: Date;
+    end: Date;
+}
+  
 function FullCalendarApp() {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<any[]>([]);
+    const [range, setRange] = useState<VisibleDates>( {
+        start: new Date(),
+        end:new Date()
+    })
     useEffect(() => {
         //mounts
-        const q = query(collection(fb, 'events')); //query to ask for data
+        const q = query(collection(fb, 'events'), orderBy('start'), startAt(range.start), endAt(range.end)); //query to ask for data
         const unsub = onSnapshot(q, (snap) => {
             const array = snap.docs.map(doc=>{
                 return {
@@ -25,7 +34,10 @@ function FullCalendarApp() {
         })
         //unmounts
         return () => {unsub()}
-    },[])
+    },[range])
+    const handleDatesSet = (e) => {
+        setRange({start:e.start, end: e.end})
+    }
     return (
         <div className="App">
             <FullCalendar
@@ -39,6 +51,7 @@ function FullCalendarApp() {
                 nowIndicator
                 dateClick={HandleDateClick}
                 eventClick={(e) => console.log(e.event.start)}
+                datesSet={handleDatesSet}
             />
         </div>
     );
